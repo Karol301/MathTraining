@@ -12,11 +12,9 @@ test("renders Start button", () => {
 
 test("can generate a task and submit a correct answer", async () => {
   global.fetch = jest.fn()
-    // mock /generate
     .mockResolvedValueOnce({
       json: async () => ({ task_id: 1, question: "2 + 2" })
     })
-    // mock /answer
     .mockResolvedValueOnce({
       json: async () => ({ correct: true, time: 1.23 })
     });
@@ -25,7 +23,6 @@ test("can generate a task and submit a correct answer", async () => {
 
   fireEvent.click(screen.getByText(/start/i));
 
-  // sprawdzamy zawartość diva z klasą .question
   const questionDiv = await screen.findByText((_, node) =>
     node.classList?.contains("question")
   );
@@ -40,11 +37,9 @@ test("can generate a task and submit a correct answer", async () => {
 
 test("shows Wrong when answer is incorrect", async () => {
   global.fetch = jest.fn()
-    // mock /generate
     .mockResolvedValueOnce({
       json: async () => ({ task_id: 2, question: "5 - 3" })
     })
-    // mock /answer
     .mockResolvedValueOnce({
       json: async () => ({ correct: false, time: 2.5 })
     });
