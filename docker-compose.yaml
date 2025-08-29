@@ -1,7 +1,9 @@
 services:
   backend:
     container_name: backend_app 
-    build: ./backend
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
     ports:
       - "5000:5000"
     networks:
@@ -9,11 +11,31 @@ services:
   
   frontend:
     container_name: frontend_app 
-    build: ./frontend
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile
     ports:
       - "3000:80"
     networks:
       - app_network
+
+  backendtest:
+    container_name: backend_test
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile.test
+    depends_on:
+      - backend
+      - frontend
+
+  frontendtest:
+    container_name: frontend_test
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile.test
+    depends_on:
+      - backend
+      - frontend    
 
 networks:
   app_network:
