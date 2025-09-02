@@ -16,4 +16,6 @@ Docker compose: Uruchamiane są kontenery za podstawie obrazów stworzonych prze
 
 
 Jenkinsfile:
-<img width="433" height="754" alt="image" src="https://github.com/user-attachments/assets/8fb259d3-cfb3-4a5a-ad5d-cc50a3a4611d" />
+
+<img width="424" height="749" alt="image" src="https://github.com/user-attachments/assets/70735404-bbf5-46d5-9acf-f602f572a1de" />
+
