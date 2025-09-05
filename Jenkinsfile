@@ -2,10 +2,8 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_USER = credentials('dockerhub-username')
-        DOCKER_PASS = credentials('dockerhub-password')
-        BACKEND_IMAGE = "${DOCKER_USER}/backend_app"
-        FRONTEND_IMAGE = "${DOCKER_USER}/frontend_app"
+        BACKEND_IMAGE = "backend_mathtraining"
+        FRONTEND_IMAGE = "frontend_mathtraining"
         COMMIT_TAG = "${env.GIT_COMMIT}"
     }
 
@@ -26,14 +24,14 @@ pipeline {
 
         stage('Run Backend Tests') {
             steps {
-                echo "Running backendtest..."
+                echo "Running backend tests..."
                 sh "docker-compose run --rm backendtest"
             }
         }
 
         stage('Run Frontend Tests') {
             steps {
-                echo "Running frontendtest..."
+                echo "Running frontend tests..."
                 sh "docker-compose run --rm frontendtest"
             }
         }
@@ -43,16 +41,22 @@ pipeline {
                 branch 'main'
             }
             steps {
-                echo "Pushing images to Docker Hub..."
-                sh "echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin"
-                sh "docker tag backend_app ${BACKEND_IMAGE}:${COMMIT_TAG}"
-                sh "docker tag frontend_app ${FRONTEND_IMAGE}:${COMMIT_TAG}"
-                sh "docker push ${BACKEND_IMAGE}:${COMMIT_TAG}"
-                sh "docker push ${FRONTEND_IMAGE}:${COMMIT_TAG}"
-                sh "docker tag ${BACKEND_IMAGE}:${COMMIT_TAG} ${BACKEND_IMAGE}:latest"
-                sh "docker tag ${FRONTEND_IMAGE}:${COMMIT_TAG} ${FRONTEND_IMAGE}:latest"
-                sh "docker push ${BACKEND_IMAGE}:latest"
-                sh "docker push ${FRONTEND_IMAGE}:latest"
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials',
+                                                 usernameVariable: 'DOCKER_USER',
+                                                 passwordVariable: 'DOCKER_PASS')]) {
+                    echo "Pushing images to Docker Hub..."
+                    sh """
+                      echo "${DOCKER_PASS}" | docker login -u "${DOCKER_USER}" --password-stdin
+                      docker tag backend_app ${DOCKER_USER}/${BACKEND_IMAGE}:${COMMIT_TAG}
+                      docker tag frontend_app ${DOCKER_USER}/${FRONTEND_IMAGE}:${COMMIT_TAG}
+                      docker push ${DOCKER_USER}/${BACKEND_IMAGE}:${COMMIT_TAG}
+                      docker push ${DOCKER_USER}/${FRONTEND_IMAGE}:${COMMIT_TAG}
+                      docker tag ${DOCKER_USER}/${BACKEND_IMAGE}:${COMMIT_TAG} ${DOCKER_USER}/${BACKEND_IMAGE}:latest
+                      docker tag ${DOCKER_USER}/${FRONTEND_IMAGE}:${COMMIT_TAG} ${DOCKER_USER}/${FRONTEND_IMAGE}:latest
+                      docker push ${DOCKER_USER}/${BACKEND_IMAGE}:latest
+                      docker push ${DOCKER_USER}/${FRONTEND_IMAGE}:latest
+                    """
+                }
             }
         }
     }
