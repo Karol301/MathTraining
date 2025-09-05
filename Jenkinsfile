@@ -44,8 +44,8 @@ pipeline {
                     echo "Pushing images to Docker Hub..."
                     sh """
                       echo "${DOCKER_PASS}" | docker login -u "${DOCKER_USER}" --password-stdin
-                      docker tag backend_app ${DOCKER_USER}/${BACKEND_IMAGE}:${COMMIT_TAG}
-                      docker tag frontend_app ${DOCKER_USER}/${FRONTEND_IMAGE}:${COMMIT_TAG}
+                      docker tag backend_mathtraining ${DOCKER_USER}/${BACKEND_IMAGE}:${COMMIT_TAG}
+                      docker tag frontend_mathtraining ${DOCKER_USER}/${FRONTEND_IMAGE}:${COMMIT_TAG}
                       docker push ${DOCKER_USER}/${BACKEND_IMAGE}:${COMMIT_TAG}
                       docker push ${DOCKER_USER}/${FRONTEND_IMAGE}:${COMMIT_TAG}
                       docker tag ${DOCKER_USER}/${BACKEND_IMAGE}:${COMMIT_TAG} ${DOCKER_USER}/${BACKEND_IMAGE}:latest
