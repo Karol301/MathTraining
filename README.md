@@ -1,21 +1,23 @@
-# MathTraining
+# MathTraining - Docker, Jenkins, Kubernetes, Terraform
 
 Dockerfile dla backendu: katalog wewnątrz kontenera gdzie będą znajsowały się pliki backendu jest /app. Kopiowany jest tam plik requirements i pobierane są wszystkie zależności. Backend jest wystawiony na porcie 5000
 
-<img width="516" height="290" alt="image" src="https://github.com/user-attachments/assets/c77f72af-0ba7-4542-89df-861a9def685a" />
+<img width="610" height="331" alt="image" src="https://github.com/user-attachments/assets/abb21ed5-f767-49d1-aac4-5cb28f11f629" />
 
 
 Dockerfile dla frontendu: wykorzystałem podejście multi stage building, końcowy obraz dzięki temu podejściu jest mniejszy
 
-<img width="540" height="494" alt="image" src="https://github.com/user-attachments/assets/4b35393d-d2a0-4c78-aa95-a10a0f06b3ca" />
+<img width="633" height="580" alt="image" src="https://github.com/user-attachments/assets/a1e65236-6371-4c9f-9ae5-28be69035602" />
 
 
 Docker compose: Uruchamiane są kontenery za podstawie obrazów stworzonych przez Dockerfile. Oba kontenery znajdują się w ten samej sieci dockerowej app_network  
 
-<img width="329" height="710" alt="image" src="https://github.com/user-attachments/assets/7b3a6ff6-b589-4ac9-b3a6-ef9309311048" />
+<img width="435" height="888" alt="image" src="https://github.com/user-attachments/assets/35f97603-d432-4ce9-8643-14ceea7770f1" />
 
 
-Jenkinsfile:
+Jenkinsfile: 
 
-<img width="424" height="749" alt="image" src="https://github.com/user-attachments/assets/70735404-bbf5-46d5-9acf-f602f572a1de" />
+<img width="677" height="911" alt="image" src="https://github.com/user-attachments/assets/12b0f099-d833-4625-92f6-1b292f5cdea4" />
+
+<img width="1438" height="304" alt="image" src="https://github.com/user-attachments/assets/6f4b6840-7139-45a7-a156-de48f9895526" />
 
