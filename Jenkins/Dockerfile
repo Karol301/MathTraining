@@ -2,9 +2,12 @@ FROM jenkins/jenkins:lts
 
 USER root
 
-RUN apt update && apt install ruby -y && gem install dip \
- && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y docker.io ruby \
+    && rm -rf /var/lib/apt/lists/* \
+    && curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose \
+    && chmod +x /usr/local/bin/docker-compose \
+    && ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 
-RUN groupadd --gid 1001 docker && usermod -a -G docker jenkins
+RUN groupmod -g 137 docker && usermod -a -G docker jenkins
 
- USER jenkins
+USER jenkins

@@ -2,8 +2,6 @@ version: '3.8'
 services:
   jenkins: 
     build: .
-    privileged: true
-    user: root
     ports:
       - "8080:8080"
       - "50000:50000"
@@ -11,9 +9,7 @@ services:
     volumes:
       - jenkins_master:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
-      - /usr/bin/com.docker.cli:/usr/bin/com.docker.cli:ro
-      - /usr/bin/docker:/usr/bin/docker:ro
-      - /usr/bin/docker-compose:/usr/bin/docker-compose:ro
+    restart: on-failure
 
 volumes:
   jenkins_master:
