@@ -1,6 +1,6 @@
 services:
   backend:
-    container_name: backend_app 
+    container_name: backend_mathtraining 
     build: 
       context: ./backend
       dockerfile: Dockerfile
@@ -10,7 +10,7 @@ services:
       - app_network
   
   frontend:
-    container_name: frontend_app 
+    container_name: frontend_mathtraining 
     build: 
       context: ./frontend
       dockerfile: Dockerfile
