@@ -1,6 +1,7 @@
 services:
   backend:
     container_name: backend_mathtraining 
+    image: backend_mathtraining
     build: 
       context: ./backend
       dockerfile: Dockerfile
@@ -11,6 +12,7 @@ services:
   
   frontend:
     container_name: frontend_mathtraining 
+    image: frontend_mathtraining 
     build: 
       context: ./frontend
       dockerfile: Dockerfile
